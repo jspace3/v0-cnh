@@ -6,9 +6,16 @@ export function Hero() {
   const router = useRouter()
 
   const handleClick = () => {
-    const audio = new Audio("https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Som%20de%20Celular%20Vibrando%20-%20Efeitos%20Sonoros%20HD%20-%20Sons%20e%20Efeitos%20-%20Efeitos%20Sonoros%20FX%20%28youtube%29-BuQeqOwbApwH9dTP1XmtBvEwhsZFOn.mp3")
+    const audio = new Audio(
+      "https://hebbkx1anhila5yf.public.blob.vercel-storage.com/Som%20de%20Celular%20Vibrando%20-%20Efeitos%20Sonoros%20HD%20-%20Sons%20e%20Efeitos%20-%20Efeitos%20Sonoros%20FX%20%28youtube%29-BuQeqOwbApwH9dTP1XmtBvEwhsZFOn.mp3",
+    )
     audio.volume = 0.5
     audio.loop = true
+
+    // Armazenar no window para acesso global
+    if (typeof window !== "undefined") {
+      ;(window as any).ringtoneAudio = audio
+    }
 
     audio.play().catch((error) => {
       console.log("[v0] Erro ao tocar áudio:", error)

@@ -18,8 +18,24 @@ export default function AcessoPage() {
     return () => clearTimeout(timer)
   }, [vagas])
 
+  const handleCheckoutRedirect = () => {
+    const params = new URLSearchParams(window.location.search)
+    const checkoutUrl = new URL("https://pay.cakto.com.br/fqcksbf_691674")
+
+    // Copiar todos os parâmetros UTM
+    const utmParams = ["utm_source", "utm_medium", "utm_campaign", "utm_content", "utm_term"]
+    utmParams.forEach((param) => {
+      const value = params.get(param)
+      if (value) {
+        checkoutUrl.searchParams.append(param, value)
+      }
+    })
+
+    window.open(checkoutUrl.toString(), "_blank")
+  }
+
   return (
-    <div className="min-h-screen bg-white">
+    <div className="min-h-screen bg-white cursor-pointer" onClick={handleCheckoutRedirect}>
       {/* Hero Section with Platform Presentation */}
       <div className="py-4 sm:py-8 px-3 sm:px-4 bg-white">
         <div className="container mx-auto max-w-2xl">

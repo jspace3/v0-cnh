@@ -21,6 +21,8 @@ export default function AtendimentoPage() {
   const [currentTime, setCurrentTime] = useState("")
   const [callDuration, setCallDuration] = useState(0)
   const [showButton, setShowButton] = useState(false)
+  const [isMuted, setIsMuted] = useState(false)
+  const [isSpeakerOn, setIsSpeakerOn] = useState(false)
   const ringtoneRef = useRef<HTMLAudioElement | null>(null)
   const callAudioRef = useRef<HTMLAudioElement | null>(null)
 
@@ -41,6 +43,17 @@ export default function AtendimentoPage() {
         ringtoneRef.current.pause()
         ringtoneRef.current.currentTime = 0
         ringtoneRef.current = null
+      }
+      if (callAudioRef.current) {
+        callAudioRef.current.pause()
+        callAudioRef.current.currentTime = 0
+        callAudioRef.current = null
+      }
+      // Parar também o áudio global do window se existir
+      if (typeof window !== "undefined" && (window as any).ringtoneAudio) {
+        ;(window as any).ringtoneAudio.pause()
+        ;(window as any).ringtoneAudio.currentTime = 0
+        ;(window as any).ringtoneAudio = null
       }
     }
   }, [isInCall])
@@ -67,32 +80,57 @@ export default function AtendimentoPage() {
   }
 
   const handleAnswer = () => {
+    console.log("[v0] Tentando parar áudio do toque...")
+
+    // Parar o áudio armazenado no window
+    if (typeof window !== "undefined" && (window as any).ringtoneAudio) {
+      const audio = (window as any).ringtoneAudio
+      console.log("[v0] Áudio encontrado no window, parando...")
+      audio.pause()
+      audio.currentTime = 0
+      audio.volume = 0
+      audio.src = ""
+      ;(window as any).ringtoneAudio = null
+      console.log("[v0] Áudio do window parado")
+    }
+
+    // Parar todos os áudios da página
     const allAudios = document.querySelectorAll("audio")
+    console.log("[v0] Encontrados", allAudios.length, "elementos de áudio na página")
     allAudios.forEach((audio) => {
       audio.pause()
       audio.currentTime = 0
+      audio.volume = 0
+      audio.src = ""
     })
 
     if (ringtoneRef.current) {
       ringtoneRef.current.pause()
       ringtoneRef.current.currentTime = 0
+      ringtoneRef.current.volume = 0
       ringtoneRef.current = null
     }
 
+    console.log("[v0] Todos os áudios parados, iniciando chamada...")
     setIsInCall(true)
     setCallDuration(0)
 
-    const callAudio = new Audio("https://hebbkx1anhila5yf.public.blob.vercel-storage.com/audio-liga%C3%A7ao-yot9tBMysmCsIqIe0k0z6ojhTZ5x6m.MP3")
-    callAudio.volume = 1.0
-    callAudioRef.current = callAudio
+    // Aguardar mais tempo antes de iniciar novo áudio
+    setTimeout(() => {
+      const callAudio = new Audio("https://hebbkx1anhila5yf.public.blob.vercel-storage.com/audio-liga%C3%A7ao-yot9tBMysmCsIqIe0k0z6ojhTZ5x6m.MP3")
+      callAudio.volume = 1.0
+      callAudioRef.current = callAudio
 
-    callAudio.play().catch((error) => {
-      console.log("[v0] Erro ao tocar áudio da chamada:", error)
-    })
+      console.log("[v0] Iniciando áudio da chamada...")
+      callAudio.play().catch((error) => {
+        console.log("[v0] Erro ao tocar áudio da chamada:", error)
+      })
 
-    callAudio.addEventListener("ended", () => {
-      setShowButton(true)
-    })
+      callAudio.addEventListener("ended", () => {
+        console.log("[v0] Áudio da chamada terminou")
+        setShowButton(true)
+      })
+    }, 500)
   }
 
   if (!isInCall) {
@@ -219,8 +257,15 @@ export default function AtendimentoPage() {
 
       <div className="px-6 pb-8 space-y-6">
         <div className="grid grid-cols-3 gap-6 max-w-sm mx-auto">
-          <button className="flex flex-col items-center gap-2 active:scale-95 transition-transform">
-            <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-gray-800 hover:bg-gray-700 flex items-center justify-center transition-all">
+          <button
+            onClick={() => setIsMuted(!isMuted)}
+            className="flex flex-col items-center gap-2 active:scale-95 transition-transform"
+          >
+            <div
+              className={`w-14 h-14 sm:w-16 sm:h-16 rounded-full flex items-center justify-center transition-all ${
+                isMuted ? "bg-white text-black" : "bg-gray-800 hover:bg-gray-700 text-white"
+              }`}
+            >
               <MicOff className="w-6 h-6 sm:w-7 sm:h-7" />
             </div>
             <span className="text-xs sm:text-sm text-gray-300">mudo</span>
@@ -233,8 +278,15 @@ export default function AtendimentoPage() {
             <span className="text-xs sm:text-sm text-gray-300">teclado</span>
           </button>
 
-          <button className="flex flex-col items-center gap-2 active:scale-95 transition-transform">
-            <div className="w-14 h-14 sm:w-16 sm:h-16 rounded-full bg-gray-800 hover:bg-gray-700 flex items-center justify-center transition-all">
+          <button
+            onClick={() => setIsSpeakerOn(!isSpeakerOn)}
+            className="flex flex-col items-center gap-2 active:scale-95 transition-transform"
+          >
+            <div
+              className={`w-14 h-14 sm:w-16 sm:h-16 rounded-full flex items-center justify-center transition-all ${
+                isSpeakerOn ? "bg-white text-black" : "bg-gray-800 hover:bg-gray-700 text-white"
+              }`}
+            >
               <Volume2 className="w-6 h-6 sm:w-7 sm:h-7" />
             </div>
             <span className="text-xs sm:text-sm text-gray-300">viva-voz</span>
