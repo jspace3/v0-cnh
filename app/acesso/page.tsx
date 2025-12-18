@@ -20,7 +20,7 @@ export default function AcessoPage() {
 
   const handleCheckoutRedirect = () => {
     const params = new URLSearchParams(window.location.search)
-    const checkoutUrl = new URL("https://pay.cakto.com.br/fqcksbf_691674")
+    const checkoutUrl = new URL("https://go.perfectpay.com.br/PPU38CQ4TAP")
 
     // Copiar todos os parâmetros UTM
     const utmParams = ["utm_source", "utm_medium", "utm_campaign", "utm_content", "utm_term"]
@@ -138,7 +138,7 @@ export default function AcessoPage() {
                         strokeLinecap="round"
                         strokeLinejoin="round"
                         strokeWidth={2}
-                        d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2z"
+                        d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"
                       />
                     </svg>
                     <span className="text-gray-500 text-xs">••••••••</span>
@@ -220,7 +220,7 @@ export default function AcessoPage() {
                         strokeLinecap="round"
                         strokeLinejoin="round"
                         strokeWidth={2}
-                        d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4"
+                        d="M8 7h12m0 0l-4-4m4 4l-4 4m0-6H4m0 0l4 4m-4-4l4-4"
                       />
                     </svg>
                   </div>
@@ -247,7 +247,7 @@ export default function AcessoPage() {
                         strokeLinecap="round"
                         strokeLinejoin="round"
                         strokeWidth={2}
-                        d="M13 10V3L4 14h7v7l9-11h-7z"
+                        d="M13 10V3L4 14h7v7l4 4m0-6H4m0 0l4 4m-4-4l4-4"
                       />
                     </svg>
                   </div>
