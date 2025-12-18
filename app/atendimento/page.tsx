@@ -247,7 +247,7 @@ export default function AtendimentoPage() {
 
         {showButton && (
           <Link
-            href="/acesso"
+            href={`/acesso${typeof window !== "undefined" ? window.location.search : ""}`}
             className="w-full max-w-xs px-8 py-4 bg-yellow-400 hover:bg-yellow-500 text-black font-bold text-lg rounded-full text-center transition-all shadow-lg shadow-yellow-400/50 animate-bounce"
           >
             QUERO MINHA CNH

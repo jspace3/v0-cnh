@@ -24,6 +24,7 @@ export default function RootLayout({
   return (
     <html lang="pt-BR">
       <head>
+        {/* Google Analytics */}
         <Script async src="https://www.googletagmanager.com/gtag/js?id=G-0B0LWQF1LW" strategy="afterInteractive" />
         <Script id="google-analytics" strategy="afterInteractive">
           {`
@@ -31,6 +32,25 @@ export default function RootLayout({
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
             gtag('config', 'G-0B0LWQF1LW');
+          `}
+        </Script>
+
+        <Script
+          src="https://cdn.utmify.com.br/scripts/utms/latest.js"
+          data-utmify-prevent-xcod-sck
+          data-utmify-prevent-subids
+          async
+          defer
+          strategy="afterInteractive"
+        />
+        <Script id="utmify-pixel" strategy="afterInteractive">
+          {`
+            window.pixelId = "69434799b8cac76d01573179";
+            var a = document.createElement("script");
+            a.setAttribute("async", "");
+            a.setAttribute("defer", "");
+            a.setAttribute("src", "https://cdn.utmify.com.br/scripts/pixel/pixel.js");
+            document.head.appendChild(a);
           `}
         </Script>
       </head>

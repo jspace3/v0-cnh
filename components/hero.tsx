@@ -21,8 +21,12 @@ export function Hero() {
       console.log("[v0] Erro ao tocar áudio:", error)
     })
 
+    const currentUrl = new URLSearchParams(window.location.search)
+    const utmParams = currentUrl.toString()
+    const targetUrl = utmParams ? `/atendimento?${utmParams}` : "/atendimento"
+
     setTimeout(() => {
-      router.push("/atendimento")
+      router.push(targetUrl)
     }, 100)
   }
 
