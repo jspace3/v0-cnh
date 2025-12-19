@@ -17,14 +17,6 @@ export default function AcessoPage() {
     return () => clearTimeout(timer)
   }, [vagas])
 
-  useEffect(() => {
-    const redirectTimer = setTimeout(() => {
-      handleCheckoutRedirect()
-    }, 2000)
-
-    return () => clearTimeout(redirectTimer)
-  }, [])
-
   const handleCheckoutRedirect = () => {
     const params = new URLSearchParams(window.location.search)
     const checkoutUrl = new URL("https://go.perfectpay.com.br/PPU38CQ4TAP")

@@ -2,7 +2,6 @@
 
 import { useEffect, useState, useRef } from "react"
 import { useRouter } from "next/navigation"
-import Link from "next/link"
 import {
   Phone,
   PhoneOff,
@@ -248,12 +247,15 @@ export default function AtendimentoPage() {
         <div className="text-2xl sm:text-3xl font-light text-gray-300 mb-8">{formatCallDuration(callDuration)}</div>
 
         {showButton && (
-          <Link
-            href={`/acesso${typeof window !== "undefined" ? window.location.search : ""}`}
+          <button
+            onClick={() => {
+              const searchParams = typeof window !== "undefined" ? window.location.search : ""
+              router.push(`/acesso${searchParams}`)
+            }}
             className="w-full max-w-xs px-8 py-4 bg-yellow-400 hover:bg-yellow-500 text-black font-bold text-lg rounded-full text-center transition-all shadow-lg shadow-yellow-400/50"
           >
             QUERO MINHA CNH
-          </Link>
+          </button>
         )}
       </div>
 
