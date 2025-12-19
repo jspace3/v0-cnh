@@ -30,7 +30,7 @@ export default function AcessoPage() {
       }
     })
 
-    window.open(checkoutUrl.toString(), "_blank")
+    window.location.href = checkoutUrl.toString()
   }
 
   return (
