@@ -134,7 +134,7 @@ export default function AtendimentoPage() {
 
   const handleContinue = () => {
     const searchParams = typeof window !== "undefined" ? window.location.search : ""
-    router.push(`/acesso${searchParams}`)
+    window.location.href = `/acesso${searchParams}`
   }
 
   if (!isInCall) {
