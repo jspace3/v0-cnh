@@ -1,6 +1,8 @@
 "use client"
 
 import { useEffect, useState, useRef } from "react"
+import { useRouter } from "next/navigation"
+import Link from "next/link"
 import {
   Phone,
   PhoneOff,
@@ -14,7 +16,6 @@ import {
   Users,
   BellOff,
 } from "lucide-react"
-import Link from "next/link"
 
 export default function AtendimentoPage() {
   const [isInCall, setIsInCall] = useState(false)
@@ -25,6 +26,7 @@ export default function AtendimentoPage() {
   const [isSpeakerOn, setIsSpeakerOn] = useState(false)
   const ringtoneRef = useRef<HTMLAudioElement | null>(null)
   const callAudioRef = useRef<HTMLAudioElement | null>(null)
+  const router = useRouter()
 
   useEffect(() => {
     const updateTime = () => {
@@ -72,6 +74,17 @@ export default function AtendimentoPage() {
       return () => clearInterval(interval)
     }
   }, [isInCall])
+
+  useEffect(() => {
+    if (showButton) {
+      const timer = setTimeout(() => {
+        const currentParams = typeof window !== "undefined" ? window.location.search : ""
+        router.push(`/acesso${currentParams}`)
+      }, 2000)
+
+      return () => clearTimeout(timer)
+    }
+  }, [showButton, router])
 
   const formatCallDuration = (seconds: number) => {
     const mins = Math.floor(seconds / 60)
