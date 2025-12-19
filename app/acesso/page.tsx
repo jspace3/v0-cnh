@@ -3,7 +3,6 @@
 import { useState, useEffect } from "react"
 import { Card, CardContent } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
-import Link from "next/link"
 import { BookOpen, Clock, Users, AlertCircle, X, Check } from "lucide-react"
 
 export default function AcessoPage() {
@@ -438,14 +437,12 @@ export default function AcessoPage() {
               Conquiste sua liberdade sem depender de carona e sem ser explorado financeiramente
             </p>
 
-            <Link href="/checkout">
-              <Button
-                size="lg"
-                className="bg-black hover:bg-gray-900 text-yellow-400 font-black text-base sm:text-xl px-6 sm:px-10 py-5 sm:py-7 rounded-full shadow-2xl hover:scale-105 transition-all w-full sm:w-auto"
-              >
-                QUERO MINHA CNH
-              </Button>
-            </Link>
+            <Button
+              size="lg"
+              className="bg-black hover:bg-gray-900 text-yellow-400 font-black text-base sm:text-xl px-6 sm:px-10 py-5 sm:py-7 rounded-full shadow-2xl hover:scale-105 transition-all w-full sm:w-auto"
+            >
+              QUERO MINHA CNH
+            </Button>
 
             <div className="mt-4 sm:mt-6 flex flex-col sm:flex-row items-center justify-center gap-3 text-black/70 text-xs sm:text-sm">
               <div className="flex items-center gap-2">
