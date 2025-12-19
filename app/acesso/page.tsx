@@ -34,7 +34,7 @@ export default function AcessoPage() {
   }
 
   return (
-    <div className="min-h-screen bg-white cursor-pointer" onClick={handleCheckoutRedirect}>
+    <div className="min-h-screen bg-white">
       {/* Hero Section with Platform Presentation */}
       <div className="py-4 sm:py-8 px-3 sm:px-4 bg-white">
         <div className="container mx-auto max-w-2xl">
@@ -145,7 +145,10 @@ export default function AcessoPage() {
                 </div>
 
                 {/* Button */}
-                <button className="w-full bg-yellow-400 hover:bg-yellow-500 text-black font-bold py-2 rounded text-xs sm:text-sm mb-2 transition-colors">
+                <button
+                  className="w-full bg-yellow-400 hover:bg-yellow-500 text-black font-bold py-2 rounded text-xs sm:text-sm mb-2 transition-colors"
+                  onClick={handleCheckoutRedirect}
+                >
                   ENTRAR NO SISTEMA
                 </button>
 
@@ -440,6 +443,7 @@ export default function AcessoPage() {
             <Button
               size="lg"
               className="bg-black hover:bg-gray-900 text-yellow-400 font-black text-base sm:text-xl px-6 sm:px-10 py-5 sm:py-7 rounded-full shadow-2xl hover:scale-105 transition-all w-full sm:w-auto"
+              onClick={handleCheckoutRedirect}
             >
               QUERO MINHA CNH
             </Button>
