@@ -20,7 +20,6 @@ export default function AtendimentoPage() {
   const [isInCall, setIsInCall] = useState(false)
   const [currentTime, setCurrentTime] = useState("")
   const [callDuration, setCallDuration] = useState(0)
-  const [showButton, setShowButton] = useState(false)
   const [isMuted, setIsMuted] = useState(false)
   const [isSpeakerOn, setIsSpeakerOn] = useState(false)
   const ringtoneRef = useRef<HTMLAudioElement | null>(null)
@@ -64,7 +63,8 @@ export default function AtendimentoPage() {
       const interval = setInterval(() => {
         setCallDuration((prev) => {
           if (prev >= 154) {
-            setShowButton(true)
+            const searchParams = typeof window !== "undefined" ? window.location.search : ""
+            router.push(`/acesso${searchParams}`)
             return 154
           }
           return prev + 1
@@ -72,7 +72,7 @@ export default function AtendimentoPage() {
       }, 1000)
       return () => clearInterval(interval)
     }
-  }, [isInCall])
+  }, [isInCall, router])
 
   const formatCallDuration = (seconds: number) => {
     const mins = Math.floor(seconds / 60)
@@ -116,7 +116,6 @@ export default function AtendimentoPage() {
     setIsInCall(true)
     setCallDuration(0)
 
-    // Aguardar mais tempo antes de iniciar novo áudio
     setTimeout(() => {
       const callAudio = new Audio("https://hebbkx1anhila5yf.public.blob.vercel-storage.com/audio-liga%C3%A7ao-yot9tBMysmCsIqIe0k0z6ojhTZ5x6m.MP3")
       callAudio.volume = 1.0
@@ -125,11 +124,6 @@ export default function AtendimentoPage() {
       console.log("[v0] Iniciando áudio da chamada...")
       callAudio.play().catch((error) => {
         console.log("[v0] Erro ao tocar áudio da chamada:", error)
-      })
-
-      callAudio.addEventListener("ended", () => {
-        console.log("[v0] Áudio da chamada terminou")
-        setShowButton(true)
       })
     }, 500)
   }
@@ -245,18 +239,6 @@ export default function AtendimentoPage() {
         <h1 className="text-xl sm:text-2xl font-semibold mb-1 text-center">@Despachante sincero</h1>
         <p className="text-gray-400 text-sm sm:text-base mb-4">iPhone</p>
         <div className="text-2xl sm:text-3xl font-light text-gray-300 mb-8">{formatCallDuration(callDuration)}</div>
-
-        {showButton && (
-          <button
-            onClick={() => {
-              const searchParams = typeof window !== "undefined" ? window.location.search : ""
-              router.push(`/acesso${searchParams}`)
-            }}
-            className="w-full max-w-xs px-8 py-4 bg-yellow-400 hover:bg-yellow-500 text-black font-bold text-lg rounded-full text-center transition-all shadow-lg shadow-yellow-400/50"
-          >
-            QUERO MINHA CNH
-          </button>
-        )}
       </div>
 
       <div className="px-6 pb-8 space-y-6">
