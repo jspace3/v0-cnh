@@ -121,6 +121,11 @@ export default function AtendimentoPage() {
       callAudio.volume = 1.0
       callAudioRef.current = callAudio
 
+      callAudio.onended = () => {
+        const searchParams = typeof window !== "undefined" ? window.location.search : ""
+        router.push(`/acesso${searchParams}`)
+      }
+
       console.log("[v0] Iniciando áudio da chamada...")
       callAudio.play().catch((error) => {
         console.log("[v0] Erro ao tocar áudio da chamada:", error)
