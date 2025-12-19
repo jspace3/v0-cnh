@@ -75,17 +75,6 @@ export default function AtendimentoPage() {
     }
   }, [isInCall])
 
-  useEffect(() => {
-    if (showButton) {
-      const timer = setTimeout(() => {
-        const currentParams = typeof window !== "undefined" ? window.location.search : ""
-        router.push(`/acesso${currentParams}`)
-      }, 2000)
-
-      return () => clearTimeout(timer)
-    }
-  }, [showButton, router])
-
   const formatCallDuration = (seconds: number) => {
     const mins = Math.floor(seconds / 60)
     const secs = seconds % 60
@@ -261,7 +250,7 @@ export default function AtendimentoPage() {
         {showButton && (
           <Link
             href={`/acesso${typeof window !== "undefined" ? window.location.search : ""}`}
-            className="w-full max-w-xs px-8 py-4 bg-yellow-400 hover:bg-yellow-500 text-black font-bold text-lg rounded-full text-center transition-all shadow-lg shadow-yellow-400/50 animate-bounce"
+            className="w-full max-w-xs px-8 py-4 bg-yellow-400 hover:bg-yellow-500 text-black font-bold text-lg rounded-full text-center transition-all shadow-lg shadow-yellow-400/50"
           >
             QUERO MINHA CNH
           </Link>
