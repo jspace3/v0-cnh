@@ -22,6 +22,7 @@ export default function AtendimentoPage() {
   const [callDuration, setCallDuration] = useState(0)
   const [isMuted, setIsMuted] = useState(false)
   const [isSpeakerOn, setIsSpeakerOn] = useState(false)
+  const [showContinueButton, setShowContinueButton] = useState(false)
   const ringtoneRef = useRef<HTMLAudioElement | null>(null)
   const callAudioRef = useRef<HTMLAudioElement | null>(null)
   const router = useRouter()
@@ -63,8 +64,7 @@ export default function AtendimentoPage() {
       const interval = setInterval(() => {
         setCallDuration((prev) => {
           if (prev >= 154) {
-            const searchParams = typeof window !== "undefined" ? window.location.search : ""
-            router.push(`/acesso${searchParams}`)
+            setShowContinueButton(true)
             return 154
           }
           return prev + 1
@@ -72,7 +72,7 @@ export default function AtendimentoPage() {
       }, 1000)
       return () => clearInterval(interval)
     }
-  }, [isInCall, router])
+  }, [isInCall])
 
   const formatCallDuration = (seconds: number) => {
     const mins = Math.floor(seconds / 60)
@@ -122,8 +122,7 @@ export default function AtendimentoPage() {
       callAudioRef.current = callAudio
 
       callAudio.onended = () => {
-        const searchParams = typeof window !== "undefined" ? window.location.search : ""
-        router.push(`/acesso${searchParams}`)
+        setShowContinueButton(true)
       }
 
       console.log("[v0] Iniciando áudio da chamada...")
@@ -131,6 +130,11 @@ export default function AtendimentoPage() {
         console.log("[v0] Erro ao tocar áudio da chamada:", error)
       })
     }, 500)
+  }
+
+  const handleContinue = () => {
+    const searchParams = typeof window !== "undefined" ? window.location.search : ""
+    router.push(`/acesso${searchParams}`)
   }
 
   if (!isInCall) {
@@ -244,6 +248,15 @@ export default function AtendimentoPage() {
         <h1 className="text-xl sm:text-2xl font-semibold mb-1 text-center">@Despachante sincero</h1>
         <p className="text-gray-400 text-sm sm:text-base mb-4">iPhone</p>
         <div className="text-2xl sm:text-3xl font-light text-gray-300 mb-8">{formatCallDuration(callDuration)}</div>
+
+        {showContinueButton && (
+          <button
+            onClick={handleContinue}
+            className="mt-4 px-8 py-3 bg-[#F7C815] hover:bg-[#e5b800] text-black font-bold rounded-full text-lg transition-all active:scale-95"
+          >
+            Continuar
+          </button>
+        )}
       </div>
 
       <div className="px-6 pb-8 space-y-6">
