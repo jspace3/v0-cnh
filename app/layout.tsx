@@ -36,6 +36,12 @@ export default function RootLayout({
         </Script>
 
         <Script
+          src="https://cdn.jsdelivr.net/gh/xTracky/static@latest/utm-handler.js"
+          data-token="8b50ea00-6b9c-4b4e-9a2e-9d498614beed"
+          strategy="afterInteractive"
+        />
+
+        <Script
           src="https://cdn.utmify.com.br/scripts/utms/latest.js"
           data-utmify-prevent-xcod-sck
           data-utmify-prevent-subids
